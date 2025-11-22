@@ -23,8 +23,8 @@
                     <div class="todo-actions">
                         <form method="post" action="{% url 'core:toggle' todo.pk %}" class="toggle-form">
                             {% csrf_token %}
-                            <button type="submit" class="status {% if todo.completed %}done{% else %}pending{% endif %}">
-                                {% if todo.completed %}✓ Done{% else %}⏱ Pending{% endif %}
+                            <button type="submit" class="btn btn-toggle {% if todo.completed %}completed{% else %}pending{% endif %}">
+                                {% if todo.completed %}✓ Mark Incomplete{% else %}Mark Complete{% endif %}
                             </button>
                         </form>
                         <a href="{% url 'core:edit' todo.pk %}" class="action-btn edit">Edit</a>
@@ -131,39 +131,43 @@
         align-items: center;
         gap: 12px;
         margin-left: 20px;
+        flex-wrap: wrap;
     }
 
     .toggle-form {
         margin: 0;
     }
 
-    .status {
-        padding: 5px 12px;
-        border-radius: 20px;
-        font-size: 0.9em;
-        font-weight: bold;
-        white-space: nowrap;
+    .btn-toggle {
+        padding: 8px 14px;
         border: none;
+        border-radius: 5px;
+        font-size: 0.85em;
+        font-weight: bold;
         cursor: pointer;
         transition: all 0.3s ease;
     }
 
-    .status.pending {
-        background: #fff3cd;
-        color: #856404;
+    .btn-toggle.pending {
+        background: #4caf50;
+        color: white;
     }
 
-    .status.pending:hover {
-        background: #ffe69c;
+    .btn-toggle.pending:hover {
+        background: #45a049;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
     }
 
-    .status.done {
-        background: #d4edda;
-        color: #155724;
+    .btn-toggle.completed {
+        background: #ff9800;
+        color: white;
     }
 
-    .status.done:hover {
-        background: #c3e6cb;
+    .btn-toggle.completed:hover {
+        background: #e68900;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
     }
 
     .action-btn {
