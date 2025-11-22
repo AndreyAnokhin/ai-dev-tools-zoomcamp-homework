@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
 
 from .models import TodoItem
 
@@ -33,5 +34,16 @@ class TodoUpdateView(UpdateView):
 class TodoDeleteView(DeleteView):
     """Delete a TODO item."""
     model = TodoItem
+    template_name = 'todo_confirm_delete.html'
+    success_url = reverse_lazy('core:home')
+
+
+class TodoToggleView(View):
+    """Toggle the completion status of a TODO item."""
+    def post(self, request, pk):
+        todo = get_object_or_404(TodoItem, pk=pk)
+        todo.completed = not todo.completed
+        todo.save()
+        return redirect('core:home')
     template_name = 'todo_confirm_delete.html'
     success_url = reverse_lazy('core:home')
