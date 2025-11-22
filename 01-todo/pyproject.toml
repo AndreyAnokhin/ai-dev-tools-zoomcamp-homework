@@ -1,9 +1,15 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "ai-dev-tools-zoomcamp-homework"
 version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+description = "Django TODO application"
 requires-python = ">=3.10"
 dependencies = [
     "django>=5.0",
 ]
+
+[tool.setuptools]
+packages = ["config", "core"]
