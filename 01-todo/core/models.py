@@ -3,6 +3,7 @@ from django.db import models
 
 class TodoItem(models.Model):
     """Model for TODO items."""
+
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     completed = models.BooleanField(default=False)
@@ -10,7 +11,7 @@ class TodoItem(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ['-created_at']
+        ordering = ["-created_at"]
 
     def __str__(self):
         return self.title
