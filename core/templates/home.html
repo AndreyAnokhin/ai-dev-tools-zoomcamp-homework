@@ -4,7 +4,10 @@
 
 {% block content %}
 <div class="todo-section">
-    <h2>Your TODO Items</h2>
+    <div class="section-header">
+        <h2>Your TODO Items</h2>
+        <a href="{% url 'core:create' %}" class="btn btn-create">+ Create TODO</a>
+    </div>
 
     {% if todos %}
         <div class="todos-list">
@@ -21,13 +24,15 @@
                         <span class="status {% if todo.completed %}done{% else %}pending{% endif %}">
                             {% if todo.completed %}✓ Done{% else %}⏱ Pending{% endif %}
                         </span>
+                        <a href="{% url 'core:edit' todo.pk %}" class="action-btn edit">Edit</a>
+                        <a href="{% url 'core:delete' todo.pk %}" class="action-btn delete">Delete</a>
                     </div>
                 </div>
             {% endfor %}
         </div>
     {% else %}
         <div class="empty-state">
-            <p>No TODO items yet. Create one to get started!</p>
+            <p>No TODO items yet. <a href="{% url 'core:create' %}">Create one</a> to get started!</p>
         </div>
     {% endif %}
 </div>
@@ -37,10 +42,33 @@
         margin: 20px 0;
     }
 
-    .todo-section h2 {
-        color: #333;
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         margin-bottom: 20px;
+    }
+
+    .section-header h2 {
+        color: #333;
         font-size: 1.8em;
+        margin: 0;
+    }
+
+    .btn-create {
+        background: #667eea;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .btn-create:hover {
+        background: #5568d3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
     }
 
     .todos-list {
@@ -96,6 +124,9 @@
     }
 
     .todo-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
         margin-left: 20px;
     }
 
@@ -104,6 +135,7 @@
         border-radius: 20px;
         font-size: 0.9em;
         font-weight: bold;
+        white-space: nowrap;
     }
 
     .status.pending {
@@ -116,6 +148,33 @@
         color: #155724;
     }
 
+    .action-btn {
+        padding: 6px 12px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.9em;
+        font-weight: bold;
+        transition: all 0.3s ease;
+    }
+
+    .action-btn.edit {
+        background: #17a2b8;
+        color: white;
+    }
+
+    .action-btn.edit:hover {
+        background: #138496;
+    }
+
+    .action-btn.delete {
+        background: #dc3545;
+        color: white;
+    }
+
+    .action-btn.delete:hover {
+        background: #c82333;
+    }
+
     .empty-state {
         text-align: center;
         padding: 60px 20px;
@@ -124,6 +183,16 @@
 
     .empty-state p {
         font-size: 1.2em;
+    }
+
+    .empty-state a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .empty-state a:hover {
+        text-decoration: underline;
     }
 </style>
 {% endblock %}

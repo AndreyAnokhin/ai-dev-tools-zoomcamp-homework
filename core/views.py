@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 from .models import TodoItem
 
@@ -11,3 +12,26 @@ class HomeView(ListView):
     template_name = 'home.html'
     context_object_name = 'todos'
     ordering = ['-created_at']
+
+
+class TodoCreateView(CreateView):
+    """Create a new TODO item."""
+    model = TodoItem
+    template_name = 'todo_form.html'
+    fields = ['title', 'description']
+    success_url = reverse_lazy('core:home')
+
+
+class TodoUpdateView(UpdateView):
+    """Update an existing TODO item."""
+    model = TodoItem
+    template_name = 'todo_form.html'
+    fields = ['title', 'description', 'completed']
+    success_url = reverse_lazy('core:home')
+
+
+class TodoDeleteView(DeleteView):
+    """Delete a TODO item."""
+    model = TodoItem
+    template_name = 'todo_confirm_delete.html'
+    success_url = reverse_lazy('core:home')
