@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}Home - TODO App{% endblock %}
+
+{% block content %}
+<div class="todo-section">
+    <h2>Your TODO Items</h2>
+
+    {% if todos %}
+        <div class="todos-list">
+            {% for todo in todos %}
+                <div class="todo-item {% if todo.completed %}completed{% endif %}">
+                    <div class="todo-content">
+                        <h3>{{ todo.title }}</h3>
+                        {% if todo.description %}
+                            <p class="description">{{ todo.description }}</p>
+                        {% endif %}
+                        <small class="meta">Created: {{ todo.created_at|date:"M d, Y H:i" }}</small>
+                    </div>
+                    <div class="todo-actions">
+                        <span class="status {% if todo.completed %}done{% else %}pending{% endif %}">
+                            {% if todo.completed %}✓ Done{% else %}⏱ Pending{% endif %}
+                        </span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <p>No TODO items yet. Create one to get started!</p>
+        </div>
+    {% endif %}
+</div>
+
+<style>
+    .todo-section {
+        margin: 20px 0;
+    }
+
+    .todo-section h2 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 1.8em;
+    }
+
+    .todos-list {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .todo-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background: #f9f9f9;
+        border-left: 4px solid #667eea;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .todo-item:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .todo-item.completed {
+        opacity: 0.7;
+        border-left-color: #4caf50;
+    }
+
+    .todo-item.completed h3 {
+        text-decoration: line-through;
+        color: #999;
+    }
+
+    .todo-content {
+        flex: 1;
+    }
+
+    .todo-content h3 {
+        margin: 0 0 5px 0;
+        color: #333;
+        font-size: 1.1em;
+    }
+
+    .description {
+        color: #666;
+        margin: 5px 0;
+        font-size: 0.95em;
+    }
+
+    .meta {
+        color: #999;
+        font-size: 0.85em;
+    }
+
+    .todo-actions {
+        margin-left: 20px;
+    }
+
+    .status {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.9em;
+        font-weight: bold;
+    }
+
+    .status.pending {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status.done {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #999;
+    }
+
+    .empty-state p {
+        font-size: 1.2em;
+    }
+</style>
+{% endblock %}
